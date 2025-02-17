@@ -15,9 +15,11 @@ dependencies = [
     "loguru>=0.7.3",
     "nltk>=3.9.1",
     "polars>=1.22.0",
+    "pyarrow>=19.0.0",
     "requests>=2.32.3",
     "scikit-learn>=1.6.1",
     "uvicorn>=0.34.0",
+    "vl-convert-python>=1.7.0",
 ]
 
 [build-system]

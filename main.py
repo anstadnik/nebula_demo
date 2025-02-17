@@ -1,10 +1,9 @@
 import json
 import os
-
-import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
 from loguru import logger
+import uvicorn
 
 
 # Import functions from our src package.
@@ -86,8 +85,10 @@ async def download_raw_reviews(app_id: str):
 @app.get("/visualize")
 async def visualize_endpoint(app_id: str):
     """
-    Endpoint to generate and return visualization specifications for the review data.
-    Returns Vega-Lite specs for the rating and sentiment distribution charts.
+    Endpoint to generate and return visualization images for the review data.
+    Returns base64-encoded PNG images for:
+      - Rating Distribution (bar chart)
+      - Sentiment Distribution (arc chart)
     """
     logger.info("Endpoint /visualize called with app_id: {}", app_id)
     raw_data = data_collection.collect_reviews(app_id)
@@ -109,8 +110,8 @@ async def visualize_endpoint(app_id: str):
     logger.success("Visualization specs generated for app_id: {}", app_id)
     return JSONResponse(
         {
-            "rating_chart": rating_chart.to_dict(),
-            "sentiment_chart": sentiment_chart.to_dict(),
+            "rating_chart": rating_chart.to_url(),
+            "sentiment_chart": sentiment_chart.to_url(),
         }
     )
 

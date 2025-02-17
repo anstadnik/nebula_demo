@@ -72,9 +72,9 @@ def extract_keywords_from_negative_reviews(df: pl.DataFrame, top_n: int = 10) ->
     Returns:
         list: List of top keywords.
     """
-    logger.info("Extracting keywords from negative reviews.")
+    logger.info("Extracting keywords from negative reviews using TF-IDF.")
     negative_df = df.filter(pl.col("sentiment") == "negative")
-    negative_texts: list[str] = negative_df["review_text"].to_list()
+    negative_texts = negative_df["review_text"].to_list()
     if not negative_texts:
         logger.warning("No negative reviews to extract keywords from.")
         return []
@@ -85,14 +85,15 @@ def extract_keywords_from_negative_reviews(df: pl.DataFrame, top_n: int = 10) ->
     indices = scores.argsort()[::-1]
     feature_names = np.array(vectorizer.get_feature_names_out())
     top_keywords = feature_names[indices][:top_n].tolist()
-    logger.success("Extracted top {} keywords.", top_n)
+    logger.success("Extracted top {} keywords via TF-IDF.", top_n)
     return top_keywords
 
 
 def generate_insights(df: pl.DataFrame) -> dict:
     """
     Generates actionable insights by combining sentiment analysis,
-    topic grouping for negative reviews, and keyword extraction.
+    topic grouping for negative reviews, and keyword extraction from both
+    TF-IDF and BERTopic's topic info.
 
     Args:
         df (pl.DataFrame): Processed review data.
@@ -102,8 +103,36 @@ def generate_insights(df: pl.DataFrame) -> dict:
     """
     logger.info("Generating insights.")
     df = perform_sentiment_analysis(df)
+
+    # Group negative reviews using BERTopic.
     topics, topic_model = group_negative_reviews(df)
-    keywords = extract_keywords_from_negative_reviews(df)
+
+    # Extract keywords from negative reviews using TF-IDF.
+    tfidf_keywords = extract_keywords_from_negative_reviews(df)
+
+    # Initialize empty topic info and negative topic keywords.
+    topic_info = []
+    negative_topic_keywords = []
+
+    if topic_model:
+        logger.info("Extracting topic info from BERTopic.")
+        # topic_model.get_topic_info returns a pandas DataFrame.
+        topic_info_df = topic_model.get_topic_info()
+        # Filter out the outlier topic if present (typically labeled as -1).
+        topic_info_df = topic_info_df[topic_info_df.Topic != -1]
+        topic_info = topic_info_df.to_dict("records")
+        # Extract keywords from the "Name" column of the topic info.
+        keywords_from_topic = []
+        for row in topic_info:
+            if "Name" in row and row["Name"]:
+                # Assume keywords are comma-separated.
+                kws = [kw.strip() for kw in row["Name"].split(",")]
+                keywords_from_topic.extend(kws)
+        negative_topic_keywords = list(set(keywords_from_topic))
+        logger.success(
+            "Extracted {} keywords from topic info.", len(negative_topic_keywords)
+        )
+
     sentiment_counts = (
         df.group_by("sentiment")
         .agg(pl.col("sentiment").count().alias("count"))
@@ -113,5 +142,7 @@ def generate_insights(df: pl.DataFrame) -> dict:
     return {
         "sentiment_counts": sentiment_counts,
         "negative_review_topics": topics,
-        "negative_review_keywords": keywords,
+        "negative_topic_info": topic_info,
+        "negative_review_keywords_tfidf": tfidf_keywords,
+        "negative_topic_keywords": negative_topic_keywords,
     }
