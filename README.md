@@ -1,6 +1,6 @@
 # Apple Store Review Analysis API
 
-This project provides an API for collecting, processing, and analyzing Apple Store reviews. It collects 100 random reviews for a specified app, processes the data to extract key fields, calculates metrics, performs sentiment analysis, groups negative reviews using BERTopic, and extracts keywords from negative reviews using TF-IDF. The API also supports visualization endpoints that return images (as base64-encoded PNGs) for charts generated with Altair.
+This project provides an API for collecting, processing, and analyzing Apple Store reviews. It collects 100 random reviews for a specified app, processes the data to extract key fields, calculates metrics, performs sentiment analysis, groups negative reviews using BERTopic, and extracts keywords from negative reviews using TF-IDF. The API also supports visualization endpoints that return images for charts generated with Altair.
 
 ## Setup Instructions
 
@@ -17,22 +17,22 @@ This project provides an API for collecting, processing, and analyzing Apple Sto
 3.	Run the API Locally
 Start the API with Uvicorn:
 
-uv run python main.py
+`uv run python main.py`
 
 The API will be available at: http://127.0.0.1:8000, and the gui at http://127.0.0.1:8000/docs#.
 Use 1459969523 for Nebula.
 
 API Endpoints
-	•	GET /collect?app_id=YOUR_APP_ID
+ -	GET /collect?app_id=YOUR_APP_ID
 Collects raw review data for the specified app.
-	•	GET /metrics?app_id=YOUR_APP_ID
+ -	GET /metrics?app_id=YOUR_APP_ID
 Processes reviews, calculates metrics (average rating, rating distribution, etc.), performs sentiment analysis, and generates insights.
-	•	GET /download?app_id=YOUR_APP_ID
+ -	GET /download?app_id=YOUR_APP_ID
 Downloads the raw review data as a JSON file.
-	•	GET /visualize?app_id=YOUR_APP_ID
+ -	GET /visualize?app_id=YOUR_APP_ID
 Generates and returns visualization images for:
-	•	Rating Distribution (bar chart)
-	•	Sentiment Distribution (arc chart)
+ -	Rating Distribution (bar chart)
+ -	Sentiment Distribution (arc chart)
 
 
 # Results
