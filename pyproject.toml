@@ -12,6 +12,7 @@ dependencies = [
     "bertopic>=0.16.4",
     "fastapi>=0.115.8",
     "llvmlite>=0.44.0",
+    "loguru>=0.7.3",
     "nltk>=3.9.1",
     "polars>=1.22.0",
     "requests>=2.32.3",
