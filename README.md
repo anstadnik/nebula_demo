@@ -31,8 +31,7 @@ Processes reviews, calculates metrics (average rating, rating distribution, etc.
 Downloads the raw review data as a JSON file.
  -	GET /visualize?app_id=YOUR_APP_ID
 Generates and returns visualization images for:
- -	Rating Distribution (bar chart)
- -	Sentiment Distribution (arc chart)
+	Rating Distribution (bar chart) and Sentiment Distribution (arc chart)
 
 
 # Results
@@ -46,7 +45,9 @@ curl -X 'GET' \
   -H 'accept: application/json'
 ```
 
-Output:
+<details>
+<summary>Output:</summary>
+
 ```json
 {
   "feed": {
@@ -5056,6 +5057,8 @@ Output:
 }
 ```
 
+</details>
+
 ## Metrics
 Request:
 ```bash
@@ -5203,3 +5206,5 @@ Output:
   "sentiment_chart": "https://vega.github.io/editor/#/url/vega-lite/N4Igxg9gdgZglgcxALlANzgUwO4tJKAFzigFcJSBnAdTgBNCALFAZgAY2AacaYsiygAlMiRoVYcAvpO50AhoTl4QUOQFtMKEPMUBaACxyARgE45ADnOmjLW-v0A2BwFZMAdjYxzMGA7YBGczl-NxAZEDU5ACcAa2VCAE8AB01kEGiwMO5MKEg6EiRUHgAbCCjleExiui1KHOINIhBuYkJi1JAAZXq4RvEW5I6oCDUSOWKskCZMRQqsaq1IUiaWuDaOgGEKFanBrQBHUjkiNYU4NE1wwggIYuIklABtUEqFtLqTvubdlK1h0dUExkL3mNTSSx2iV+aUOx1aZwuWRBVTBIBSUTA9TkCE03BgZUi4jSADp-DBvlCOrCTopiIjJABdK5rdpabqfeoAAgAInBKIQonAjKRiNBvgASShgRiYSJaMSEJKUZAAehVFwQcmJCDWjFIRmJcAgKqlMsi6swmt0xTWmHVzmJACY2KTiQArShi2QKOR1QiUZQ6OQGYxmSzWWwsexOVweLw+PyBYKhZDPEAfBr1P6YEVRcbfCFE5zcdGYojY1L+F1sYHpnpfNJQS0I3E8ZZEx0OEuYDFYnEoZyO4k1zigDO9LNpJIQShrc6twsofwmbu98v95AsczDxnSIA"
 }
 ```
+[rating chart](https://vega.github.io/editor/#/url/vega-lite/N4Igxg9gdgZglgcxALlANzgUwO4tJKAFzigFcJSBnAdTgBNCALFAZgAY2AacaYsiygAlMiRoVYcAvpO50AhoTl4QUOQFtMKEPMUBaOewCcYMAA5MANgBMc04cxyrMOgHYYAFhYBWTGBhy2AEYrBxAZEDU5ACcAa2VCAE8AB01kEAAjaLDuTChIOhIkVBBCCAgAG2IklABtUHhMcrotKIVCkG5ElK0AR1I5IjhFYjRNGXqsJq1IUiIOkuTUkD6B4mG4UbCAXW4AD2UGqbTWviROofKlgCU2qDOF7rSIKILVcuyQBIPJ5rSZufOhEuWgAwhQAQ8litButNtJAcC0jdTgACAAicEohCicHSpGI0HmABJKGBGJhIloxIQkpRkAB6emjBByAB0CCGjFI6VZcAg9NJ5MiTMwLN05SGmCZXlZVjYrMCrIAVpRCbIFHJKJhCJRlDo5PojCZzNZbPZHM43J4fH4AsFQsg6iATu1kCxuP9xMhAuNnbcil4PeCvYZfS67ih3EHZl6WGH-ShAtG5m6XJIttIgA)
+[sentiment chart](https://vega.github.io/editor/#/url/vega-lite/N4Igxg9gdgZglgcxALlANzgUwO4tJKAFzigFcJSBnAdTgBNCALFAZgAY2AacaYsiygAlMiRoVYcAvpO50AhoTl4QUOQFtMKEPMUBaACxyARgE45ADnOmjLW-v0A2BwFZMAdjYxzMGA7YBGczl-NxAZEDU5ACcAa2VCAE8AB01kEGiwMO5MKEg6EiRUHgAbCCjleExiui1KHOINIhBuYkJi1JAAZXq4RvEW5I6oCDUSOWKskCZMRQqsaq1IUiaWuDaOgGEKFanBrQBHUjkiNYU4NE1wwggIYuIklABtUEqFtLqTvubdlK1h0dUExkL3mNTSSx2iV+aUOx1aZwuWRBVTBIBSUTA9TkCE03BgZUi4jSADp-DBvlCOrCTopiIjJABdK5rdpabqfeoAAgAInBKIQonAjKRiNBvgASShgRiYSJaMSEJKUZAAehVFwQcmJCDWjFIRmJcAgKqlMsi6swmt0xTWmHVzmJACY2KTiQArShi2QKOR1QiUZQ6OQGYxmSzWWwsexOVweLw+PyBYKhZDPEAfBr1P6YEVRcbfCFE5zcdGYojY1L+F1sYHpnpfNJQS0I3E8ZZEx0OEuYDFYnEoZyO4k1zigDO9LNpJIQShrc6twsofwmbu98v95AsczDxnSIA)
