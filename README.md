@@ -1,3 +1,5 @@
+[Link to deployed API](https://nebula-demo.onrender.com/docs)
+
 # Apple Store Review Analysis API
 
 This project provides an API for collecting, processing, and analyzing Apple Store reviews. It collects 100 random reviews for a specified app, processes the data to extract key fields, calculates metrics, performs sentiment analysis, groups negative reviews using BERTopic, and extracts keywords from negative reviews using TF-IDF. The API also supports visualization endpoints that return images for charts generated with Altair.
