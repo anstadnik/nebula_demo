@@ -3,7 +3,11 @@ import nltk
 import polars as pl
 from loguru import logger
 from nltk.sentiment import SentimentIntensityAnalyzer
-from bertopic import BERTopic
+import os
+
+if not os.getenv("RENDER", False):
+    from bertopic import BERTopic
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Download the VADER lexicon if not already present.
@@ -55,7 +59,12 @@ def group_negative_reviews(df: pl.DataFrame):
         logger.warning("No negative reviews found for topic modeling.")
         return [], None
 
-    topic_model = BERTopic()
+    try:
+        topic_model = BERTopic()
+    except NameError:
+        logger.warning("Topic modeling disabled")
+        return [], None
+
     topics, _ = topic_model.fit_transform(negative_texts)
     logger.success("Negative reviews grouped into {} topics.", len(set(topics)))
     return topics, topic_model
